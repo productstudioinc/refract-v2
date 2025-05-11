@@ -1,29 +1,18 @@
+"use client";
+
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import { createORPCReactQueryUtils } from "@orpc/react-query";
 import type { RouterUtils } from "@orpc/react-query";
 import type { RouterClient } from "@orpc/server";
-import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createContext, use } from "react";
-import { toast } from "sonner";
 import type { appRouter } from "../../../server/src/routers/index";
 
-type ORPCReactUtils = RouterUtils<RouterClient<typeof appRouter>>;
+declare global {
+	var $client: RouterClient<typeof appRouter> | undefined;
+}
 
-export const queryClient = new QueryClient({
-	queryCache: new QueryCache({
-		onError: (error) => {
-			toast.error(`Error: ${error.message}`, {
-				action: {
-					label: "retry",
-					onClick: () => {
-						queryClient.invalidateQueries();
-					},
-				},
-			});
-		},
-	}),
-});
+type ORPCReactUtils = RouterUtils<RouterClient<typeof appRouter>>;
 
 export const link = new RPCLink({
 	url: `${process.env.NEXT_PUBLIC_SERVER_URL}/rpc`,
@@ -35,7 +24,8 @@ export const link = new RPCLink({
 	},
 });
 
-export const client: RouterClient<typeof appRouter> = createORPCClient(link);
+export const client: RouterClient<typeof appRouter> =
+	globalThis.$client ?? createORPCClient(link);
 
 export const orpc = createORPCReactQueryUtils(client);
 

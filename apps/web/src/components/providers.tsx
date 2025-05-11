@@ -1,10 +1,12 @@
 "use client";
-import { ORPCContext, orpc, queryClient } from "@/utils/orpc";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./ui/sonner";
+import { getQueryClient } from "@/utils/tanstack-query.utils";
+import { orpc, ORPCContext } from "@/utils/orpc.client";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
+	const queryClient = getQueryClient();
 	return (
 		<ThemeProvider
 			attribute="class"
