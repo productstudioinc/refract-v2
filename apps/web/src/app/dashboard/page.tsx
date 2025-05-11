@@ -1,19 +1,15 @@
-import DashboardClient from "./client";
-import { getQueryClient, HydrateClient } from "@/utils/tanstack-query.utils";
 import { orpc } from "@/utils/orpc";
-import { auth } from "../../../../server/src/lib/auth";
-import { headers } from "next/headers";
+import { HydrateClient, getQueryClient } from "@/utils/tanstack-query.utils";
 import { redirect } from "next/navigation";
+import DashboardClient from "./client";
 
 export default async function Dashboard() {
-	const user = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const queryClient = getQueryClient();
+	const session = await queryClient.fetchQuery(orpc.getSession.queryOptions());
 
-	if (!user) {
+	if (!session?.user) {
 		redirect("/login");
 	}
-	const queryClient = getQueryClient();
 
 	queryClient.prefetchQuery(orpc.privateData.queryOptions());
 

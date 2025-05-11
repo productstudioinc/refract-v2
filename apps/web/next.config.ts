@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {};
+/** @type {import('next').NextConfig} */
+const nextConfig: NextConfig = {
+	serverExternalPackages: ["pg", "pg-cloudflare"],
+};
 
 export default nextConfig;
