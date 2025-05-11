@@ -3,7 +3,16 @@ import type { Context } from "./context";
 
 export const o = os.$context<Context>();
 
-export const publicProcedure = o;
+const optionalSessionMiddleware = o.middleware(async ({ context, next }) => {
+	return next({
+		context: {
+			...context,
+			session: context.session,
+		},
+	});
+});
+
+export const publicProcedure = o.use(optionalSessionMiddleware);
 
 const requireAuth = o.middleware(async ({ context, next }) => {
 	if (!context.session?.user) {

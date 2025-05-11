@@ -9,3 +9,5 @@ const apiHost = withRelatedProject({
 export const authClient = createAuthClient({
 	baseURL: apiHost,
 });
+
+export type Session = typeof authClient.$Infer.Session;

@@ -1,9 +1,9 @@
 import {
+	HydrationBoundary,
+	QueryClient,
 	defaultShouldDehydrateQuery,
 	dehydrate,
-	HydrationBoundary,
 	isServer,
-	QueryClient,
 } from "@tanstack/react-query";
 import { cache } from "react";
 

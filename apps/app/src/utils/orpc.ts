@@ -1,10 +1,10 @@
 import type { RouterUtils } from "@orpc/react-query";
 
 import { createORPCClient } from "@orpc/client";
+import { RPCLink } from "@orpc/client/fetch";
+import { createORPCReactQueryUtils } from "@orpc/react-query";
 import type { RouterClient } from "@orpc/server";
 import type { appRouter } from "../../../server/src/routers";
-import { createORPCReactQueryUtils } from "@orpc/react-query";
-import { RPCLink } from "@orpc/client/fetch";
 
 declare global {
 	var $client: RouterClient<typeof appRouter> | undefined;

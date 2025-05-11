@@ -1,3 +1,5 @@
+"use client";
+
 import { authClient } from "@/lib/auth-client";
 import { useORPC } from "@/utils/orpc.client";
 import { useQuery } from "@tanstack/react-query";

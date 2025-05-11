@@ -10,7 +10,8 @@ export const appRouter = {
 			user: context.session?.user,
 		};
 	}),
-	getSession: publicProcedure.handler(({ context }) => {
+	getSession: publicProcedure.handler(async ({ context }) => {
+		console.log("context.session on server", context.session);
 		return context.session ?? null;
 	}),
 };
