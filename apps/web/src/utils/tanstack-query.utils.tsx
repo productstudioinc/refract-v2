@@ -5,6 +5,7 @@ import {
 	isServer,
 	QueryClient,
 } from "@tanstack/react-query";
+import { cache } from "react";
 
 // TanStack Query client setup (can remain as is)
 function makeQueryClient() {
@@ -33,7 +34,7 @@ function makeQueryClient() {
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-export function getQueryClient() {
+function createQueryClient() {
 	if (isServer) {
 		// Server: always make a new query client
 		return makeQueryClient();
@@ -45,6 +46,8 @@ export function getQueryClient() {
 	if (!browserQueryClient) browserQueryClient = makeQueryClient();
 	return browserQueryClient;
 }
+
+export const getQueryClient = cache(createQueryClient);
 
 export function HydrateClient(props: { children: React.ReactNode }) {
 	const queryClient = getQueryClient();
