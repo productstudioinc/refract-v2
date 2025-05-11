@@ -1,3 +1,5 @@
+"use client";
+
 import { useORPC } from "@/utils/orpc.client";
 import { useQuery } from "@tanstack/react-query";
 
